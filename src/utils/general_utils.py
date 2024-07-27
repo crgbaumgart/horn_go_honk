@@ -3,9 +3,8 @@ import time
 
 
 def geocode_address(address):
-    """This function is going to call the GPS coordinates that we specify. We can hard code it, or we can pass the
-    address from something else, like a keyboard input if that is what we want to do. Once tested I will move into
-    general_utils.py, so we can use it for other things. You must pass the "address" param from the main function.
+    """This function is going to call the GPS coordinates that we specify.
+     You must pass the "address" param from the main function.
     params:
     geolocator: We have to name the app that we are using this information in. I chose "horn_goes_honk"
     """
