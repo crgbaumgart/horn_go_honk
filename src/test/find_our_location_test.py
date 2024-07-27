@@ -1,5 +1,6 @@
 from geopy.geocoders import Nominatim
 import time
+import pandas as pd
 
 
 def geocode_address(address):
@@ -27,3 +28,30 @@ def geocode_address(address):
             # Wait for 2 seconds before retrying (Nominatim has a 1 sec rate limit for the api)
             time.sleep(2)
     return None, None, None
+
+
+def main():
+    """ Passes the "address" param to the geo_code function and returns GPS coordinates"""
+    # Specify our address (using kava as for testing)
+    address = "109 Industrial St, Denton, TX 76201"
+
+    #  storing the location result to be used in the pandas df
+    location_result = geocode_address(address)
+
+    data = []
+
+    if location_result:
+        full_address, latitude, longitude = location_result
+        data.append({"Address:": full_address, "Latitude:": latitude, "Longitude:": longitude})
+    #  else case to return nothing if the address isn't found
+    else:
+        data.append({"Address:": address, "Latitude:": None, "Longitude:": None})
+
+    df = pd.DataFrame(data)
+
+    #  print the data frame to the console
+    print(df)
+
+
+if __name__ == "__main__":
+    main()
