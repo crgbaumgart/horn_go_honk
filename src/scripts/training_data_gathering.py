@@ -1,36 +1,26 @@
-from geopy.geocoders import Nominatim
-import time
 import pyaudio
 import wave
 import os
+from datetime import datetime
 
 
-
-def geocode_address(address):
-    """This function is going to call the GPS coordinates that we specify.
-     You must pass the "address" param from the main function.
-    params:
-    geolocator: We have to name the app that we are using this information in. I chose "horn_goes_honk"
+def list_audio_devices():
     """
+    Lists audio devices from the os and generates a list. Change the "device_index" param in the main
+        function to use a different device from the OS default
+    """
+    p = pyaudio.PyAudio()
+    info = p.get_host_api_info_by_index(0)
+    num_devices = info.get('deviceCount')
+    for i in range(0, num_devices):
+        device_info = p.get_device_info_by_host_api_device_index(0, i)
+        if device_info.get('maxInputChannels') > 0:
+            print(f"Input Device id {i} - {device_info.get('name')}")
+    p.terminate()
 
-    # Initialize the Nominatim geocoder with a descriptive user agent
-    geolocator = Nominatim(user_agent="horn_goes_honk")
 
-    # Attempt to get the location of the specified address with retry logic
-    for attempt in range(5):
-        try:
-            location = geolocator.geocode(address)
-            if location:
-                return location. address, location.latitude, location.longitude
-            else:
-                print("Address not found")
-                return None
-        except Exception as e:
-            print(f"Error occurred: {e}")
-            print("Retrying...")
-            # Wait for 2 seconds before retrying (Nominatim has a 1 sec rate limit for the api)
-            time.sleep(2)
-    return None, None, None
+
+
 
 
 def create_directory_if_not_exists(directory):
@@ -57,7 +47,7 @@ def record_audio(filename, duration, rate=44100, channels=2, chunk_size=1024, de
         chunk_size will result in higher latency but lower cpu usage (we might want to experiment depending on
         CPU speed of the rpi
     device_index: index number to specify which audio device to use. "1" will use the default audio device
-        selected by the OS.
+        selected by the OS
     """
     # Initialize pyaudio
     p = pyaudio.PyAudio()
@@ -97,16 +87,25 @@ def record_audio(filename, duration, rate=44100, channels=2, chunk_size=1024, de
         wf.writeframes(b''.join(frames))
 
 
-def list_audio_devices():
+def main():
+    """Main function to record audio and write the audio to a file
+    params::
+    duration: length of audio recording in seconds
+    timestamp: current time stamp at the time of execution. It is appened to the end of the file name to
+        version the files to avoid confusion
+    desktop_directory: directory for storing the audio files
+    filename: the file name for the audio file
     """
-    Lists audio devices from the os and generates a list. Change the "device_index" param in the main
-        function to use a different device from the OS default
-    """
-    p = pyaudio.PyAudio()
-    info = p.get_host_api_info_by_index(0)
-    num_devices = info.get('deviceCount')
-    for i in range(0, num_devices):
-        device_info = p.get_device_info_by_host_api_device_index(0, i)
-        if device_info.get('maxInputChannels') > 0:
-            print(f"Input Device id {i} - {device_info.get('name')}")
-    p.terminate()
+    list_audio_devices()
+    device_index = 1  # Replace with the actual device index from the list
+    duration = 30
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    desktop_directory = os.path.join(os.path.expanduser("~"), "Documents", "horn_go_honk_testing", "Audio_training")
+    create_directory_if_not_exists(desktop_directory)
+    filename = f"{desktop_directory}/audio_recording_{timestamp}_NT.wav"
+    #  call recording function, passes file_name and duration back to the record_audio function
+    record_audio(filename, duration)
+
+
+if __name__ == "__main__":
+    main()
