@@ -6,7 +6,7 @@ from datetime import datetime
 
 def create_directory_if_not_exists(directory):
     """
-    checks to see if a directory exists for the files, if not it will create one
+    checks to see if a directory exists for the audio files, if not it will create one
 
     """
     if not os.path.exists(directory):
@@ -16,6 +16,21 @@ def create_directory_if_not_exists(directory):
 
 
 def record_audio(filename, duration, rate=44100, channels=2, chunk_size=1024, device_index=None):
+    """
+    Function to record audio and store in a local file.
+    params::
+    filename: filename specified in the main function of the script where this function is called
+        duration: duration of recording, specified in seconds. Declare value in the main  script where this
+        function is called
+    rate: sampling rate of recording. in kHz.
+    channels: number of recording channels. 1 is mono, 2 is stereo
+    chunk_size: defines how many frames of audio are held in the buffer before being written to the file. High
+        chunk_size will result in higher latency but lower cpu usage (we might want to experiment depending on
+        CPU speed of the rpi
+    device_index: index number to specify which audio device to use. "1" will use the default audio device
+        selected by the OS.
+    TODO: Add a "list_devices" function to allow users to select which audio device they want to use.
+    """
     # Initialize pyaudio
     p = pyaudio.PyAudio()
 
@@ -55,12 +70,21 @@ def record_audio(filename, duration, rate=44100, channels=2, chunk_size=1024, de
 
 
 def main():
+    """Main function to record audio and write the audio to a file
+    params::
+    duration: length of audio recording in seconds
+    timestamp: current time stamp at the time of execution. It is appened to the end of the file name to
+        version the files to avoid confusion
+    desktop_directory: directory for storing the audio files
+    filename: the file name for the audio file
+    """
     device_index = 1  # Replace with the actual device index from the list
     duration = 30
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     desktop_directory = os.path.join(os.path.expanduser("~"), "Documents", "horn_go_honk_testing", "Audio")
     create_directory_if_not_exists(desktop_directory)
     filename = f"{desktop_directory}/audio_recording_{timestamp}.wav"
+    #  call recording function, passes file_name and duration back to the record_audio function
     record_audio(filename, duration)
 
 
