@@ -92,36 +92,35 @@ def record_audio(filename, duration, rate=44100, channels=2, chunk_size=1024, de
 def main():
     """Main function to record audio and write the audio to a file
     params::
-    duration: length of audio recording in seconds
+    recording_duration: length of audio recording in seconds
     timestamp: current time stamp at the time of execution. It is appened to the end of the file name to
         version the files to avoid confusio n
     desktop_directory: directory for storing the audio files
     filename: the file name for the audio file
     """
-    recording_duration = 600
     desired_number_of_recordings = 10
     recording_start_time = time.time()
     list_audio_devices()
-    start_counter = 0
+    counter = 0
     while True:
-        true_count = start_counter + 1
+        counter += 1
         current_time = time.time()
         elapsed_time = current_time - recording_start_time
         print(f"Function running for {elapsed_time} seconds")
 
-        if true_count > desired_number_of_recordings:
+        if counter > desired_number_of_recordings:
             print("Recording Limit Reached")
             break
         device_index = 1  # Replace with the actual device index from the list
+        #  number of
         duration = 30
-        #  timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         #  while doing data collection, make sure to change the file path based on if the train is present,
         #  and also change the file name. File name should end in "NT" for no train and "TP" for a train
         #  being present.
         desktop_directory = os.path.join(os.path.expanduser("~"), "Documents", "horn_go_honk_testing",
                                          "Audio_training", "No Train")
         create_directory_if_not_exists(desktop_directory)
-        filename = f"{desktop_directory}/audio_recording_{true_count}_NT.wav"
+        filename = f"{desktop_directory}/audio_recording_{counter}_NT.wav"
         #  call recording function, passes file_name and duration back to the record_audio function
         record_audio(filename, duration)
 
