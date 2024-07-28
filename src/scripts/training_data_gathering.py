@@ -2,6 +2,7 @@ import pyaudio
 import wave
 import os
 from datetime import datetime
+import time
 
 
 def list_audio_devices():
@@ -71,6 +72,7 @@ def record_audio(filename, duration, rate=44100, channels=2, chunk_size=1024, de
         frames.append(data)
 
     print("Recording finished")
+    print(f"File created at: {filename} ")
 
     # Stop and close the stream
     stream.stop_stream()
@@ -96,15 +98,29 @@ def main():
     desktop_directory: directory for storing the audio files
     filename: the file name for the audio file
     """
+    recording_duration = 180
+    recording_start_time = time.time()
     list_audio_devices()
-    device_index = 1  # Replace with the actual device index from the list
-    duration = 30
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    desktop_directory = os.path.join(os.path.expanduser("~"), "Documents", "horn_go_honk_testing", "Audio_training")
-    create_directory_if_not_exists(desktop_directory)
-    filename = f"{desktop_directory}/audio_recording_{timestamp}_NT.wav"
-    #  call recording function, passes file_name and duration back to the record_audio function
-    record_audio(filename, duration)
+    while True:
+        current_time = time.time()
+        elapsed_time = current_time - recording_start_time
+        print(f"Function running for {elapsed_time} seconds")
+
+        if elapsed_time > recording_duration:
+            print("Time Limit Excceeded")
+            break
+        device_index = 1  # Replace with the actual device index from the list
+        duration = 30
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        #  while doing data collection, make sure to change the file path based on if the train is present,
+        #  and also change the file name. File name should end in "NT" for no train and "TP" for a train
+        #  being present.
+        desktop_directory = os.path.join(os.path.expanduser("~"), "Documents", "horn_go_honk_testing",
+                                         "Audio_training", "No Train")
+        create_directory_if_not_exists(desktop_directory)
+        filename = f"{desktop_directory}/audio_recording_{timestamp}_NT.wav"
+        #  call recording function, passes file_name and duration back to the record_audio function
+        record_audio(filename, duration)
 
 
 if __name__ == "__main__":
