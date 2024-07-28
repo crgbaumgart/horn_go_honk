@@ -58,7 +58,6 @@ def record_audio(filename, duration, rate=44100, channels=2, chunk_size=1024, de
         CPU speed of the rpi
     device_index: index number to specify which audio device to use. "1" will use the default audio device
         selected by the OS.
-    TODO: Add a "list_devices" function to allow users to select which audio device they want to use.
     """
     # Initialize pyaudio
     p = pyaudio.PyAudio()
