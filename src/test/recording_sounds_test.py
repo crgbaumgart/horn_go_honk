@@ -4,6 +4,25 @@ import os
 from datetime import datetime
 
 
+def list_audio_devices():
+    """
+    Lists audio devices from the os and generates a list. Change the "device_index" param in the main
+        function to use a different device from the OS default
+    """
+    p = pyaudio.PyAudio()
+    info = p.get_host_api_info_by_index(0)
+    num_devices = info.get('deviceCount')
+    for i in range(0, num_devices):
+        device_info = p.get_device_info_by_host_api_device_index(0, i)
+        if device_info.get('maxInputChannels') > 0:
+            print(f"Input Device id {i} - {device_info.get('name')}")
+    p.terminate()
+
+
+
+
+
+
 def create_directory_if_not_exists(directory):
     """
     checks to see if a directory exists for the audio files, if not it will create one
@@ -28,8 +47,7 @@ def record_audio(filename, duration, rate=44100, channels=2, chunk_size=1024, de
         chunk_size will result in higher latency but lower cpu usage (we might want to experiment depending on
         CPU speed of the rpi
     device_index: index number to specify which audio device to use. "1" will use the default audio device
-        selected by the OS.
-    TODO: Add a "list_devices" function to allow users to select which audio device they want to use.
+        selected by the OS
     """
     # Initialize pyaudio
     p = pyaudio.PyAudio()
@@ -78,6 +96,7 @@ def main():
     desktop_directory: directory for storing the audio files
     filename: the file name for the audio file
     """
+    list_audio_devices()
     device_index = 1  # Replace with the actual device index from the list
     duration = 30
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

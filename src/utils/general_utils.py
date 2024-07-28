@@ -96,3 +96,18 @@ def record_audio(filename, duration, rate=44100, channels=2, chunk_size=1024, de
         wf.setsampwidth(p.get_sample_size(pyaudio.paInt16))
         wf.setframerate(rate)
         wf.writeframes(b''.join(frames))
+
+
+def list_audio_devices():
+    """
+    Lists audio devices from the os and generates a list. Change the "device_index" param in the main
+        function to use a different device from the OS default
+    """
+    p = pyaudio.PyAudio()
+    info = p.get_host_api_info_by_index(0)
+    num_devices = info.get('deviceCount')
+    for i in range(0, num_devices):
+        device_info = p.get_device_info_by_host_api_device_index(0, i)
+        if device_info.get('maxInputChannels') > 0:
+            print(f"Input Device id {i} - {device_info.get('name')}")
+    p.terminate()
