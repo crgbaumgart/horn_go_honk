@@ -118,9 +118,9 @@ def main():
         #  and also change the file name. File name should end in "NT" for no train and "TP" for a train
         #  being present.
         desktop_directory = os.path.join(os.path.expanduser("~"), "Documents", "horn_go_honk_testing",
-                                         "Audio_training", "No Train")
+                                         "Audio_training", "TRAIN")
         create_directory_if_not_exists(desktop_directory)
-        filename = f"{desktop_directory}/audio_recording_{counter}_NT.wav"
+        filename = f"{desktop_directory}/audio_recording_{counter}_TP.wav"
         #  call recording function, passes file_name and duration back to the record_audio function
         record_audio(filename, duration)
 

@@ -30,8 +30,16 @@ def main():
     ]
 
     non_train_horn_files = [
-        'path_to_non_train_horn_file1.wav',
-        'path_to_non_train_horn_file2.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/No Train/audio_recording_1_NT.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/No Train/audio_recording_2_NT.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/No Train/audio_recording_3_NT.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/No Train/audio_recording_4_NT.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/No Train/audio_recording_5_NT.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/No Train/audio_recording_6_NT.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/No Train/audio_recording_7_NT.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/No Train/audio_recording_8_NT.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/No Train/audio_recording_9_NT.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/No Train/audio_recording_10_NT.wav',
         # Add more file paths
     ]
 
