@@ -98,10 +98,10 @@ def main():
     desktop_directory: directory for storing the audio files
     filename: the file name for the audio file
     """
-    desired_number_of_recordings = 1
+    desired_number_of_recordings = 60
     recording_start_time = time.time()
     list_audio_devices()
-    counter = 0
+    counter = 30
     while True:
         counter += 1
         current_time = time.time()
@@ -113,7 +113,7 @@ def main():
             break
         device_index = 1  # Replace with the actual device index from the list
         #  number of
-        duration = 60
+        duration = 30
         """
         Change the file path depending on the type of data being gathered.
         For no train in data:: Audio_training/No Train
