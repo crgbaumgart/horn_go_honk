@@ -98,7 +98,7 @@ def main():
     desktop_directory: directory for storing the audio files
     filename: the file name for the audio file
     """
-    desired_number_of_recordings = 10
+    desired_number_of_recordings = 1
     recording_start_time = time.time()
     list_audio_devices()
     counter = 0
@@ -113,14 +113,14 @@ def main():
             break
         device_index = 1  # Replace with the actual device index from the list
         #  number of
-        duration = 30
+        duration = 60
         #  while doing data collection, make sure to change the file path based on if the train is present,
         #  and also change the file name. File name should end in "NT" for no train and "TP" for a train
         #  being present.
         desktop_directory = os.path.join(os.path.expanduser("~"), "Documents", "horn_go_honk_testing",
-                                         "Audio_training", "TRAIN")
+                                         "Audio_training", "Possible_Train_Events")
         create_directory_if_not_exists(desktop_directory)
-        filename = f"{desktop_directory}/audio_recording_{counter}_TP.wav"
+        filename = f"{desktop_directory}/audio_recording_{counter}_PTE.wav"
         #  call recording function, passes file_name and duration back to the record_audio function
         record_audio(filename, duration)
 
