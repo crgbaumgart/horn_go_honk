@@ -24,8 +24,13 @@ def extract_features(filename):
 def main():
     # Specify the paths to your train horn and non-train horn audio files
     train_horn_files = [
-        'path_to_train_horn_file1.wav',
-        'path_to_train_horn_file2.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/TRAIN/audio_recording_1_TP.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/TRAIN/audio_recording_2_TP.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/TRAIN/audio_recording_3_TP.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/TRAIN/audio_recording_4_TP.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/TRAIN/audio_recording_5_TP.wav',
+        'C:/Users/donte/Documents/horn_go_honk_testing/Audio_training/TRAIN/audio_recording_6_TP.wav',
+
         # Add more file paths
     ]
 
