@@ -114,13 +114,22 @@ def main():
         device_index = 1  # Replace with the actual device index from the list
         #  number of
         duration = 60
-        #  while doing data collection, make sure to change the file path based on if the train is present,
-        #  and also change the file name. File name should end in "NT" for no train and "TP" for a train
-        #  being present.
+        """
+        Change the file path depending on the type of data being gathered.
+        For no train in data:: Audio_training/No Train
+        For a train present:: Audio_training/TRAIN
+        For a possible train event (to test ML algorithim):: Audio_training/Possible Train Event"""
         desktop_directory = os.path.join(os.path.expanduser("~"), "Documents", "horn_go_honk_testing",
-                                         "Audio_training", "Possible_Train_Events")
+                                         "Audio_training", "No Train")
         create_directory_if_not_exists(desktop_directory)
-        filename = f"{desktop_directory}/audio_recording_{counter}_PTE.wav"
+        """
+        For the file name use the following for the last characters in the file name depending on data being
+        gathered:
+        PTE:: Potential Train Event
+        NT:: No Train
+        TP:Train Present
+        """
+        filename = f"{desktop_directory}/audio_recording_{counter}_NT.wav"
         #  call recording function, passes file_name and duration back to the record_audio function
         record_audio(filename, duration)
 
